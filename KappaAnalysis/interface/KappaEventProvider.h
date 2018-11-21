@@ -6,8 +6,8 @@
 /**
    \brief class to connect the analysis specific event content to the pipelines.
 
-   Defines the basic functionality expected by PipelineRunner and implements the WireEvent function. 
-   This function needs to be called after the KappaEventProvider is instantiated in the main 
+   Defines the basic functionality expected by PipelineRunner and implements the WireEvent function.
+   This function needs to be called after the KappaEventProvider is instantiated in the main
    executable.
 */
 
@@ -51,7 +51,7 @@ public:
 		if (! settings.GetGenJets().empty()){
 			if (settings.GetUseKLVGenJets()) this->m_event.m_genJets = (KGenJets*) this->template SecureFileInterfaceGet<KLVs>(settings.GetGenJets());
 			else this->m_event.m_genJets = this->template SecureFileInterfaceGet<KGenJets>(settings.GetGenJets());
-			
+
 		}
 		if (! settings.GetTaggedJets().empty())
 			this->m_event.m_tjets = this->template SecureFileInterfaceGet<KJets>(settings.GetTaggedJets());
@@ -64,6 +64,18 @@ public:
 
 		if (! settings.GetPuppiMet().empty())
 			this->m_event.m_puppiMet = this->template SecureFileInterfaceGet<KMET>(settings.GetPuppiMet(), false);
+
+		if (! settings.GetNoPUMet().empty())
+			this->m_event.m_nopuMet = this->template SecureFileInterfaceGet<KMET>(settings.GetNoPUMet(), false);
+
+		if (! settings.GetPUMet().empty())
+			this->m_event.m_puMet = this->template SecureFileInterfaceGet<KMET>(settings.GetPUMet(), false);
+
+		if (! settings.GetPUCorrectedMet().empty())
+			this->m_event.m_pucorrectedMet = this->template SecureFileInterfaceGet<KMET>(settings.GetPUCorrectedMet(), false);
+
+		if (! settings.GetTrackMet().empty())
+			this->m_event.m_trackMet = this->template SecureFileInterfaceGet<KMET>(settings.GetTrackMet(), false);
 
 		//GenMET info
 		if (! settings.GetGenMet().empty())
@@ -84,19 +96,19 @@ public:
 			this->m_event.m_pfAllChargedParticlesPileUp = this->template SecureFileInterfaceGet<KPFCandidates>(settings.GetPFAllChargedParticlesPileUp());
 		if (! settings.GetPackedPFCandidates().empty())
 			this->m_event.m_packedPFCandidates = this->template SecureFileInterfaceGet<KPFCandidates>(settings.GetPackedPFCandidates());
-		
+
 		// triggers
 		if (! settings.GetTriggerInfos().empty())
 			this->m_event.m_triggerObjectMetadata = this->template SecureFileInterfaceGetMeta<KTriggerObjectMetadata>(settings.GetTriggerInfos(), false);
 		if (! settings.GetTriggerObjects().empty())
 			this->m_event.m_triggerObjects = this->template SecureFileInterfaceGet<KReducedTriggerObjects>(settings.GetTriggerObjects(), false);
-		
+
 		// Generator info
 		if (! settings.GetGenParticles().empty())
 			this->m_event.m_genParticles = this->template SecureFileInterfaceGet<KGenParticles>(settings.GetGenParticles());
 		if (! settings.GetLheParticles().empty())
 			this->m_event.m_lheParticles = this->template SecureFileInterfaceGet<KLHEParticles>(settings.GetLheParticles(), false);
-	
+
 		// Vertex info
 		if (! settings.GetBeamSpot().empty())
 			this->m_event.m_beamSpot = this->template SecureFileInterfaceGet<KBeamSpot>(settings.GetBeamSpot());
